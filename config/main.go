@@ -58,7 +58,7 @@ func (config Config) GetDir(name string) string {
 	if len(subFolders) < 2 {
 		return ""
 	}
-	dirname := config.MoveDir + strings.Join(subFolders[1:], "/") + "/"
+	dirname := strings.Replace(config.MoveDir+"/"+strings.Join(subFolders[1:], "/")+"/", "//", "/", -1)
 	if err := os.MkdirAll(dirname, os.ModeDir|os.ModePerm); err != nil {
 		if !strings.Contains(err.Error(), "file exist") {
 			log.Fatalln(err)

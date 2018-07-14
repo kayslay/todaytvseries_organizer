@@ -47,7 +47,7 @@ func moveZipContent(c config.Config, f os.FileInfo) {
 		log.Println("moving to", filename)
 		_, err = io.Copy(nFile, r)
 		if err != nil {
-			fmt.Println("error coping file to destination due to", err)
+			fmt.Println("error copying file to destination due to", err)
 			return
 		}
 		if c.DeleteAfter {
@@ -77,6 +77,7 @@ func startWorker(c config.Config, n int) {
 	}
 }
 
+//Start starts the organization of series from the rar files
 func Start(c config.Config) error {
 	files, err := findExt(c)
 	if err != nil {
