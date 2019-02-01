@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -30,13 +31,13 @@ func (r *ConfigReg) UnmarshalJSON(b []byte) error {
 }
 
 type Config struct {
-	DeleteAfter bool      `json:"deleteAfter,omitempty" bson:"deleteAfter,omitempty"`
-	MoveDir     string    `json:"moveDir,omitempty" bson:"moveDir,omitempty"`
-	Path        string    `json:"path,omitempty" bson:"path,omitempty"`
-	Ext         string    `json:"ext,omitempty" bson:"ext,omitempty"`
-	MatchExt    string    `json:"matchExt,omitempty" bson:"matchExt,omitempty"`
-	FolderName  ConfigReg `json:"folderName,omitempty" bson:"folderName,omitempty"`
-	WorkerCount int8      `json:"workerCount,omitempty" bson:"workerCount,omitempty"`
+	DeleteAfter bool      `json:"deleteAfter,omitempty" `
+	MoveDir     string    `json:"moveDir,omitempty"`
+	Path        string    `json:"path,omitempty"`
+	Ext         string    `json:"ext,omitempty" `
+	MatchExt    string    `json:"matchExt,omitempty"`
+	FolderName  ConfigReg `json:"folderName,omitempty" `
+	WorkerCount int8      `json:"workerCount,omitempty" `
 }
 
 var defReg = (regexp.MustCompile(`(.+)?\.S(\d{2})`))
@@ -58,7 +59,7 @@ func (config Config) GetDir(name string) string {
 	if len(subFolders) < 2 {
 		return ""
 	}
-	dirname := strings.Replace(config.MoveDir+"/"+strings.Join(subFolders[1:], "/")+"/", "//", "/", -1)
+	dirname := filepath.Join(subFolders[1:]...)
 	if err := os.MkdirAll(dirname, os.ModeDir|os.ModePerm); err != nil {
 		if !strings.Contains(err.Error(), "file exist") {
 			log.Fatalln(err)
