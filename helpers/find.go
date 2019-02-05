@@ -8,7 +8,7 @@ import (
 	"github.com/kayslay/todaytvseries_organizer/config"
 )
 
-//findExt get all the zip
+//findExt get all the compressed files with the config.Ext name
 func findExt(c config.Config) ([]os.FileInfo, error) {
 	dir, err := os.Open(c.Path)
 	if err != nil {
@@ -30,7 +30,7 @@ func findExt(c config.Config) ([]os.FileInfo, error) {
 		return nil, err
 	}
 	for _, v := range files {
-		if !v.IsDir() && strings.Contains(v.Name(), fmt.Sprintf(".%s", c.Ext)) {
+		if !v.IsDir() && strings.HasSuffix(v.Name(), fmt.Sprintf(".%s", c.Ext)) {
 			matchFile = append(matchFile, v)
 		}
 	}

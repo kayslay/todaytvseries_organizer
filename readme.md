@@ -14,7 +14,7 @@ This project was written in Go. Just a Noob learning new things :).
             $ cd /path/of/downloaded/rar/files
             $ tv_org
 
-This project is learning process for me.
+This project is learning experience for me.
 
 ## Config File Settings
 

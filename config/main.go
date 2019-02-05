@@ -48,7 +48,7 @@ var DefaultConfig Config = Config{
 	MoveDir:     "./",
 	Path:        "./",
 	Ext:         ".zip",
-	MatchExt:    ".go",
+	MatchExt:    ".mkv",
 	FolderName:  ConfigReg{defReg},
 	WorkerCount: 1,
 }

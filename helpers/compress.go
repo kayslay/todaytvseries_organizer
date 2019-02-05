@@ -34,7 +34,7 @@ func moveZipContent(c config.Config, f os.FileInfo) {
 	}
 
 	for _, v := range files {
-		if !strings.Contains(v, c.MatchExt) {
+		if !strings.HasSuffix(v, c.MatchExt) {
 			continue
 		}
 		err := r.EntryFor(v)

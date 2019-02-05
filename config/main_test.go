@@ -36,7 +36,6 @@ func TestConfig_GetDir(t *testing.T) {
 		args   args
 		want   string
 	}{
-		// TODO: Add test cases.
 		{"default_config", defaultField, args{"GOT.S02.zip"}, "GOT/02"},
 		{"default_config", defaultField, args{"GOT.S02E01.zip"}, "GOT/02"},
 		{"default_config", defaultField, args{"24hours.S02.zip"}, "24hours/02"},
