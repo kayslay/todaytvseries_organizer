@@ -1,9 +1,9 @@
 {
     "deleteAfter": false,
-    "moveDir": "./",
-    "path": "./",
-    "ext": "rar",
-    "matchExt": ".mkv",
+    "moveDir": "./out",
+    "path": "./in/",
+    "ext": "zip",
+    "matchExt": ".mp4",
     "folderName": "(.+)?\\.S(\\d{2})",
-    "workerCount": 1
+    "workerCount": 3
 }
