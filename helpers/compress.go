@@ -6,6 +6,7 @@ import (
 	"log"
 	"math"
 	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 
@@ -42,7 +43,7 @@ func moveZipContent(c config.Config, f os.FileInfo) {
 			fmt.Println("error opening file", v, "in", c.Path+compressName, "due to", err)
 			return
 		}
-		filename := c.GetDir(v) + v
+		filename := filepath.Join(c.GetDir(v), v)
 		nFile, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0777)
 		log.Println("moving to", filename)
 		_, err = io.Copy(nFile, r)
