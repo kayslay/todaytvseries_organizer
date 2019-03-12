@@ -14,10 +14,14 @@ import (
 	"github.com/kayslay/todaytvseries_organizer/config"
 )
 
-var w sync.WaitGroup
-var ch = make(chan os.FileInfo)
+var (
+	w                         sync.WaitGroup
+	ch                        = make(chan os.FileInfo)
+	progressCount, numOfFiles int
+)
 
-func moveZipContent(c config.Config, f os.FileInfo) {
+// moveCompressedExt this moves the content in the compressed file to the destination folder
+func moveCompressedExt(c config.Config, f os.FileInfo) {
 	compressName := f.Name()
 	r, err := unarr.NewArchive(c.Path + compressName)
 	if err != nil {
@@ -34,6 +38,9 @@ func moveZipContent(c config.Config, f os.FileInfo) {
 		return
 	}
 
+	matchExt := strings.Split(fmt.Sprintf(".%s", c.MatchExt), ",")
+	// loop through the content in the compressed file
+	// pick the files that match the extension suffix
 	for _, v := range files {
 		if !matchesExt(v, matchExt...) {
 			continue
@@ -51,22 +58,22 @@ func moveZipContent(c config.Config, f os.FileInfo) {
 			fmt.Println("error copying file to destination due to", err)
 			return
 		}
-		if c.DeleteAfter {
-			err := os.Remove(c.Path + filename)
-			if err != nil {
-				fmt.Println("error deleting ", c.Path+compressName, "due to", err)
-				return
-			}
-		}
 
 	}
-
+	// delete compressed file if config.Config.DeleteAfter is set to true
+	if c.DeleteAfter {
+		err := os.Remove(c.Path + compressName)
+		if err != nil {
+			fmt.Println("error deleting ", filepath.Join(c.Path, compressName), "due to", err)
+			return
+		}
+	}
 	return
 }
 
 func worker(c config.Config, i int) {
 	for val := range ch {
-		moveZipContent(c, val)
+		moveCompressedExt(c, val)
 		w.Done()
 		fmt.Println("worker", i, "completed")
 	}
