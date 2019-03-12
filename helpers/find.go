@@ -30,9 +30,20 @@ func findExt(c config.Config) ([]os.FileInfo, error) {
 		return nil, err
 	}
 	for _, v := range files {
-		if !v.IsDir() && strings.HasSuffix(v.Name(), fmt.Sprintf(".%s", c.Ext)) {
+		if !v.IsDir() && matchesExt(v.Name(), strings.Split(fmt.Sprintf(".%s", c.Ext), ",")...) {
 			matchFile = append(matchFile, v)
 		}
 	}
 	return matchFile, nil
+}
+
+// checks if the name matches one of the variadic list of exts suffixes
+func matchesExt(name string, exts ...string) bool {
+	for _, ext := range exts {
+		if strings.HasSuffix(name, ext) {
+			return true
+		}
+	}
+
+	return false
 }
