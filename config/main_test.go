@@ -25,8 +25,8 @@ func TestConfig_GetDir(t *testing.T) {
 		DeleteAfter: false,
 		MoveDir:     "./",
 		Path:        "./",
-		Ext:         ".zip",
-		MatchExt:    ".go",
+		Ext:         "zip",
+		MatchExt:    "go",
 		FolderName:  config.ConfigReg{defReg},
 		WorkerCount: 1,
 	}
