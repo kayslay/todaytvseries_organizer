@@ -90,5 +90,6 @@ func Start(c config.Config) error {
 		ch <- v
 	}
 	w.Wait()
+	close(ch)
 	return nil
 }
